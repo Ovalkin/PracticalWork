@@ -17,17 +17,23 @@
                             Профиль
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-                            <li>
-                                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#signin">
-                                    Войти
-                                </button>
-                            </li>
-                            <li>
-                                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#signup">
-                                    Зарегестрироваться
-                                </button>
-                            </li>
-                            <li><a class="dropdown-item" href="#">Избранное</a></li>
+                            @if(!isset($userData))
+                                <li>
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#signin">
+                                        Войти
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#signup">
+                                        Зарегестрироваться
+                                    </button>
+                                </li>
+                            @else
+                                <li class="dropdown-header">{{$userData['surname'].' '.$userData['name'].' '. $userData['lastname']}}</li>
+                                <li><a class="dropdown-item" href="#">Настройки профиля</a></li>
+                                <li><a class="dropdown-item" href="#">Мои заказы</a></li>
+                                <li><a class="dropdown-item" href="/signout">Выйти</a></li>
+                            @endif
                         </ul>
                     </li>
                 </ul>
