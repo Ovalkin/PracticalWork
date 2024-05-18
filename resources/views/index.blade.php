@@ -9,7 +9,15 @@
 
 @include('header')
 
-@include('main')
+@switch($page)
+    @case('')
+        @include('main')
+        @break
+    @case('orders')
+        @include('orders')
+        @break
+@endswitch
+
 
 @include('footer')
 </body>

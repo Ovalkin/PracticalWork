@@ -1,13 +1,13 @@
 <header class="position-fixed w-100 z-3">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container gap-3">
-            <a href="#" class="nav-link navbar-brand">Orders</a>
+            <a href="/" class="nav-link navbar-brand">Orders</a>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Главная</a>
+                    <a href="/" class="nav-link">Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Мои заказы</a>
+                    <a href="/orders" class="nav-link">Мои заказы</a>
                 </li>
             </ul>
             <div class="collapse navbar-collapse">

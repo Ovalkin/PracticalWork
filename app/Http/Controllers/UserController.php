@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -9,12 +10,23 @@ class UserController extends Controller
 {
     public function index($page = '')
     {
-        $returnData = array();
-        $userId = session()->get('signedUser');
+        $returnData['page'] = $page;
 
-        if (isset($userId)){
+        $userId = session('signedUser');
+        if (isset($userId)) {
             $userData = new User;
             $returnData['userData'] = $userData->getUserData($userId);
+        }
+
+        switch ($page) {
+            case '':
+                break;
+            case 'orders':
+                $order = new Order;
+                $returnData['orders'] = $order->getForUserId($userId);
+                break;
+            default:
+                return redirect()->to('/');
         }
 
         return view('index', $returnData);
@@ -37,8 +49,7 @@ class UserController extends Controller
         $user = new User;
         $userId = $user->signinCheck($signinData);
         if ($userId) {
-            if (isset($signinData['rememberMe'])) session(['signedUser' => $userId]);
-            else session(['signedUser' => $userId]);
+            session(['signedUser' => $userId]);
         }
         return redirect()->to('/');
     }
@@ -46,6 +57,8 @@ class UserController extends Controller
     public function signup(Request $request)
     {
         $signupData = $request->all();
+
+        unset($signupData['_token']);
 
         foreach ($signupData as $input) {
             if ($input == null | $input == '+7') return "Заполните все поля";
@@ -58,6 +71,7 @@ class UserController extends Controller
         $checkData = $user->signupCheck($phone, $email); //
 
         if ($signupData['password'] == $signupData['rePassword']) {
+            unset($signupData['rePassword']);
             if ($checkData) {
                 $user->signup($signupData);
             } else return 'Почти или телефон уже заняты!'; //
@@ -69,5 +83,18 @@ class UserController extends Controller
         $this->signin($signinData);
 
         return redirect()->to('/');
+    }
+
+    public function makeOrder(Request $request)
+    {
+        $orderData = $request->all();
+        unset($orderData['_token']);
+
+        $orderData['user_id'] = session('signedUser');
+
+        $order = new Order;
+        $order->addOrder($orderData);
+
+        return redirect()->to('orders');
     }
 }
