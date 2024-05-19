@@ -31,7 +31,7 @@
                             @else
                                 <li class="dropdown-header">{{$userData['surname'].' '.$userData['name'].' '. $userData['lastname']}}</li>
                                 <li><a class="dropdown-item" href="#">Настройки профиля</a></li>
-                                <li><a class="dropdown-item" href="#">Мои заказы</a></li>
+                                <li><a class="dropdown-item" href="/orders">Мои заказы</a></li>
                                 <li><a class="dropdown-item" href="/signout">Выйти</a></li>
                             @endif
                         </ul>

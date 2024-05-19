@@ -13,7 +13,7 @@ class UserController extends Controller
         $returnData['page'] = $page;
 
         $userId = session('signedUser');
-        if (isset($userId)) {
+        if ($userId != null) {
             $userData = new User;
             $returnData['userData'] = $userData->getUserData($userId);
         }
@@ -34,7 +34,7 @@ class UserController extends Controller
 
     public function signout()
     {
-        session()->forget('signedUser');
+        session()->flush();
         return redirect()->to('/');
     }
 
