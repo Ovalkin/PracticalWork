@@ -16,12 +16,11 @@
 
     <section class="featured-ads py-5">
         <div class="container">
-            <div id="formCreateOrders" style="min-height: 700px">
+            <div id="formCreateOrders" style="min-height: 400px">
                 <h1>Сделайте заказ</h1>
-                <form action="">
-                </form>
+                @include('forms.makeOrder')
             </div>
-            <div id="formBecomeSupplier" style="min-height: 700px">
+            <div id="formBecomeSupplier" style="min-height: 400px">
                 <h1>Стать поставщиком</h1>
                 <form action="">
                 </form>

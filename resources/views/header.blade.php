@@ -1,13 +1,13 @@
 <header class="position-fixed w-100 z-3">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container gap-3">
-            <a href="#" class="nav-link navbar-brand">Orders</a>
+            <a href="/" class="nav-link navbar-brand">Orders</a>
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Главная</a>
+                    <a href="/" class="nav-link">Главная</a>
                 </li>
                 <li class="nav-item">
-                    <a href="#" class="nav-link">Мои заказы</a>
+                    <a href="/orders" class="nav-link">Мои заказы</a>
                 </li>
             </ul>
             <div class="collapse navbar-collapse">
@@ -17,17 +17,23 @@
                             Профиль
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-                            <li>
-                                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#signin">
-                                    Войти
-                                </button>
-                            </li>
-                            <li>
-                                <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#signup">
-                                    Зарегестрироваться
-                                </button>
-                            </li>
-                            <li><a class="dropdown-item" href="#">Избранное</a></li>
+                            @if(!isset($userData))
+                                <li>
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#signin">
+                                        Войти
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#signup">
+                                        Зарегестрироваться
+                                    </button>
+                                </li>
+                            @else
+                                <li class="dropdown-header">{{$userData['surname'].' '.$userData['name'].' '. $userData['lastname']}}</li>
+                                <li><a class="dropdown-item" href="#">Настройки профиля</a></li>
+                                <li><a class="dropdown-item" href="/orders">Мои заказы</a></li>
+                                <li><a class="dropdown-item" href="/signout">Выйти</a></li>
+                            @endif
                         </ul>
                     </li>
                 </ul>

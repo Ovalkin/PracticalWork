@@ -1,7 +1,12 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::post('/signup', [UserController::class, 'signup']);
+Route::post('/signin', [UserController::class, 'signin']);
+Route::get('/signout', [UserController::class, 'signout']);
+
+Route::post('/orders/make', [UserController::class, 'makeOrder']);
+
+Route::get('/{page?}', [UserController::class, 'index']);
