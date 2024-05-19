@@ -22,7 +22,7 @@ class UserController extends Controller
                 break;
             case 'orders':
                 $order = new Order;
-                $returnData['orders'] = $order->getForUserId($userId);
+                $returnData['orders'] = $order->getForUserId(session('userData')['id']);
                 break;
             case 'admin-panel':
                 if (session('userData')['role'] != 'admin')

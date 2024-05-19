@@ -6,9 +6,6 @@
                 <li class="nav-item">
                     <a href="/" class="nav-link">Главная</a>
                 </li>
-                <li class="nav-item">
-                    <a href="/orders" class="nav-link">Мои заказы</a>
-                </li>
             </ul>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
