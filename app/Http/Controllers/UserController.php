@@ -14,8 +14,7 @@ class UserController extends Controller
 
         $userId = session('signedUser');
         if ($userId != null) {
-            $userData = new User;
-            $returnData['userData'] = $userData->getUserData($userId);
+            $returnData['userData'] = session('userData');
         }
 
         switch ($page) {
@@ -24,6 +23,10 @@ class UserController extends Controller
             case 'orders':
                 $order = new Order;
                 $returnData['orders'] = $order->getForUserId($userId);
+                break;
+            case 'admin-panel':
+                if (session('userData')['role'] != 'admin')
+                    return redirect()->to('/');
                 break;
             default:
                 return redirect()->to('/');
@@ -49,8 +52,10 @@ class UserController extends Controller
         $user = new User;
         $userId = $user->signinCheck($signinData);
         if ($userId) {
-            session(['signedUser' => $userId]);
-        }
+            $userData = $user->getUserData($userId);
+            session(['signedUser' => true]);
+            session(['userData' => $userData]);
+        } else return "Логин или пароль не верны";
         return redirect()->to('/');
     }
 

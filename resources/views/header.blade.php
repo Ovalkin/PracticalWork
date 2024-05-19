@@ -31,6 +31,9 @@
                             @else
                                 <li class="dropdown-header">{{$userData['surname'].' '.$userData['name'].' '. $userData['lastname']}}</li>
                                 <li><a class="dropdown-item" href="#">Настройки профиля</a></li>
+                                @if($userData['role'] == 'admin')
+                                    <li><a class="dropdown-item" href="/admin-panel">Админ-панель</a></li>
+                                @endif
                                 <li><a class="dropdown-item" href="/orders">Мои заказы</a></li>
                                 <li><a class="dropdown-item" href="/signout">Выйти</a></li>
                             @endif

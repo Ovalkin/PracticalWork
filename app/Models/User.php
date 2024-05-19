@@ -12,12 +12,16 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    public function signinCheck($signinData)
+    public function signinCheck($signinData) // возращает айди юзера который авторизировался
     {
-        $checkEmail = User::query()
-            ->where('email', $signinData['email'])
-            ->get()[0];
-        if (password_verify($signinData['password'], $checkEmail['password'])) return $checkEmail['id'];
+        $checkEmail = User::query()->where('email', $signinData['email'])->exists();
+        if ($checkEmail)
+        {
+            $checkEmail = User::query()
+                ->where('email', $signinData['email'])
+                ->get()[0];
+            if (password_verify($signinData['password'], $checkEmail['password'])) return $checkEmail['id'];
+        }
         return false;
     }
 

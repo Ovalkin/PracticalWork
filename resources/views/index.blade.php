@@ -16,6 +16,9 @@
     @case('orders')
         @include('orders')
         @break
+    @case('admin-panel')
+        @include('adminPanel')
+        @break
 @endswitch
 
 
