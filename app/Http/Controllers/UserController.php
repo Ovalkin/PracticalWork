@@ -24,6 +24,7 @@ class UserController extends Controller
             case 'orders':
                 $order = new Order;
                 $returnData['orders'] = $order->getForUserId($userId);
+                return view('orders', $returnData);
                 break;
             default:
                 return redirect()->to('/');
@@ -48,7 +49,7 @@ class UserController extends Controller
 
         $user = new User;
         $userId = $user->signinCheck($signinData);
-        if ($userId) {
+        if ($userId){
             session(['signedUser' => $userId]);
         }
         return redirect()->to('/');
