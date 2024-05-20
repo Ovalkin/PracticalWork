@@ -1,3 +1,5 @@
+@extends('adminPanel')
+@section('adminContent')
 <div class="container pt-5" style="min-height: 900px">
     <div class="mt-5">
         <ul class="list-group list-group-horizontal">
@@ -16,14 +18,10 @@
                 <li class="list-group-item flex-fill w-25" title="{{$order['quantity']}}">{{$order['quantity']}}</li>
                 <li class="list-group-item flex-fill w-25" title="{{$order['address']}}">{{$order['address']}}</li>
                 <li class="list-group-item flex-fill w-25">
-                    <form action="/admin-panel/orders/submit" method="post" class="d-flex justify-content-between w-100">
-                        @csrf
-                        <input type="hidden" name="idOrder" value="{{$order['id']}}">
-                        <button type="submit" name="action" value="accept" class="btn-success btn">Принять</button>
-                        <button type="submit" name="action" value="reject" class="btn-danger btn">Отклонить</button>
-                    </form>
+                    @include('forms.orderSubmit')
                 </li>
             </ul>
         @endforeach
     </div>
 </div>
+@endsection

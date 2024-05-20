@@ -7,10 +7,10 @@
 </head>
 <body>
 
-@include('header')
+@include('layouts.header')
 
-@include('adminPanel')
+@yield('content')
 
-@include('footer')
+@include('layouts.footer')
 </body>
 </html>

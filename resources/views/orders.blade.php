@@ -1,3 +1,6 @@
+@extends('adminPanel')
+
+@section('content')
 <div class="container pt-5" style="min-height: 900px">
     <div class="mt-5">
         <ul class="list-group list-group-horizontal">
@@ -17,3 +20,4 @@
         @endforeach
     </div>
 </div>
+@endsection

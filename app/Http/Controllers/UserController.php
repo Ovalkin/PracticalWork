@@ -19,20 +19,14 @@ class UserController extends Controller
 
         switch ($page) {
             case '':
-                break;
+                return view('index', $returnData);
             case 'orders':
                 $order = new Order;
                 $returnData['orders'] = $order->getForUserId(session('userData')['id']);
-                break;
-            case 'admin-panel':
-                if (session('userData')['role'] != 'admin')
-                    return redirect()->to('/');
-                break;
+                return view('orders', $returnData);
             default:
                 return redirect()->to('/');
         }
-
-        return view('index', $returnData);
     }
 
     public function signout()
