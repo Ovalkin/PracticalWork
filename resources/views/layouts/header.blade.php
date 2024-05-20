@@ -30,8 +30,11 @@
                                 <li><a class="dropdown-item" href="#">Настройки профиля</a></li>
                                 @if(session('userData')['role'] == 'admin')
                                     <li><a class="dropdown-item" href="/admin-panel">Админ-панель</a></li>
+                                @elseif(session('userData')['role'] == 'supplier')
+                                    <li><a class="dropdown-item {{$page == 'orders' ? 'active' : '' }}" href="/supplier/orders">Доступные заказы</a></li>
+                                @elseif(session('userData')['role'] == 'client')
+                                    <li><a class="dropdown-item" href="/orders">Мои заказы</a></li>
                                 @endif
-                                <li><a class="dropdown-item" href="/orders">Мои заказы</a></li>
                                 <li><a class="dropdown-item" href="/signout">Выйти</a></li>
                             @endif
                         </ul>

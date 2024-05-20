@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\SupplierController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -14,3 +15,7 @@ Route::get('/admin-panel/{page?}', [AdminController::class, 'index']);
 Route::post('/admin-panel/orders/submit', [AdminController::class, 'submitUserOrder']);
 
 Route::get('/{page?}', [UserController::class, 'index']);
+
+Route::post('/supplier-panel/orders/submit', [SupplierController::class, 'submitUserOrder']);
+Route::get('/supplier/{page?}', [SupplierController::class, 'index']);
+

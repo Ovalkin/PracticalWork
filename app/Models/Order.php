@@ -48,4 +48,8 @@ class Order extends Model
     {
         Order::query()->where('id', $id)->update(['status'=>'Принята администратором, ожидайте принятия поставщиком']);
     }
+    public function submitUserOrderSupplier($id)
+    {
+        Order::query()->where('id', $id)->update(['status'=>'Принят поставщиком']);
+    }
 }
