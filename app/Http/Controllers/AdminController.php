@@ -15,4 +15,14 @@ class AdminController extends Controller
         $returnData['orders'] = $order->getAll();
         return view('indexAdmin', $returnData);
     }
+
+    public function submitUserOrder(Request $request)
+    {
+        $action = $request['action'];
+        $orderId = $request['idOrder'];
+
+        if ($action == 'accept')
+
+        dd($request->all());
+    }
 }

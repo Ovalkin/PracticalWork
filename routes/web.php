@@ -11,5 +11,6 @@ Route::get('/signout', [UserController::class, 'signout']);
 Route::post('/orders/make', [UserController::class, 'makeOrder']);
 
 Route::get('/admin-panel/{page?}', [AdminController::class, 'index']);
+Route::post('/admin-panel/orders/submit', [AdminController::class, 'submitUserOrder']);
 
 Route::get('/{page?}', [UserController::class, 'index']);

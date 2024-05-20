@@ -9,18 +9,7 @@
 
 @include('header')
 
-@switch($page)
-    @case('')
-        @include('adminPanel')
-        @break
-    @case('orders')
-        @include('orders')
-        @break
-    @case('admin-panel')
-        @include('adminPanel')
-        @break
-@endswitch
-
+@include('adminPanel')
 
 @include('footer')
 </body>
