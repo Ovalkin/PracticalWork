@@ -9,6 +9,21 @@ class Order extends Model
 {
     use HasFactory;
 
+    public function getAll(){
+        $orders = Order::query()
+            ->select('*')
+            ->get()
+            ->toArray();
+        $returnOrders = array();
+        foreach ($orders as $order){
+            $userData = new User;
+            $userData = $userData->getUserData($order['user_id']);
+            $order['userName'] = $userData['name'].' '. $userData['surname'] . ' ' . $userData['lastname'];
+            $returnOrders[] = $order;
+        }
+        return $returnOrders;
+    }
+
     public function getForUserId($id)
     {
         return Order::query()

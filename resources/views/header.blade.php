@@ -14,7 +14,7 @@
                             Профиль
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-                            @if(!isset($userData))
+                            @if(!session('userData'))
                                 <li>
                                     <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#signin">
                                         Войти
@@ -26,9 +26,9 @@
                                     </button>
                                 </li>
                             @else
-                                <li class="dropdown-header">{{$userData['surname'].' '.$userData['name'].' '. $userData['lastname']}}</li>
+                                <li class="dropdown-header">{{session('userData')['surname'].' '.session('userData')['name'].' '. session('userData')['lastname']}}</li>
                                 <li><a class="dropdown-item" href="#">Настройки профиля</a></li>
-                                @if($userData['role'] == 'admin')
+                                @if(session('userData')['role'] == 'admin')
                                     <li><a class="dropdown-item" href="/admin-panel">Админ-панель</a></li>
                                 @endif
                                 <li><a class="dropdown-item" href="/orders">Мои заказы</a></li>

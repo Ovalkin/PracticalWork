@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Order;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
@@ -10,6 +11,8 @@ class AdminController extends Controller
     {
         $returnData['page'] = $page;
 
-        return view('index', $returnData);
+        $order = new Order;
+        $returnData['orders'] = $order->getAll();
+        return view('indexAdmin', $returnData);
     }
 }
