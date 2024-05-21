@@ -9,11 +9,27 @@ class Order extends Model
 {
     use HasFactory;
 
+    public function getAll()
+    {
+        $orders = Order::query()
+            ->select('*')
+            ->get()
+            ->toArray();
+        $returnOrders = array();
+        foreach ($orders as $order) {
+            $userData = new User;
+            $userData = $userData->getUserData($order['user_id']);
+            $order['userName'] = $userData['name'] . ' ' . $userData['surname'] . ' ' . $userData['lastname'];
+            $returnOrders[] = $order;
+        }
+        return $returnOrders;
+    }
+
     public function getForUserId($id)
     {
         return Order::query()
             ->select('*')
-            ->where('user_id','=', $id)
+            ->where('user_id', '=', $id)
             ->get()
             ->toArray();
     }
@@ -26,5 +42,28 @@ class Order extends Model
 
         if (Order::query()->insert($orderData)) return true;
         else return false;
+    }
+
+    public function acceptUserOrder($id)
+    {
+        Order::query()
+            ->where('id', $id)
+            ->update(['status' => 'Принята администратором, ожидайте принятия поставщиком']);
+    }
+    public function rejectUserOrder($id)
+    {
+        Order::query()
+            ->where('id', $id)
+            ->update(['status' => 'Заказ отклонён']);
+    }
+
+    public function submitUserOrderSupplier($orderId, $supplierId)
+    {
+        Order::query()
+            ->where('id', $orderId)
+            ->update([
+                'supplier_id' => $supplierId,
+                'status' => 'Принят поставщиком'
+            ]);
     }
 }

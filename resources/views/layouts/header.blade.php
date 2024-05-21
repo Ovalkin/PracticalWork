@@ -6,9 +6,6 @@
                 <li class="nav-item">
                     <a href="/" class="nav-link">Главная</a>
                 </li>
-                <li class="nav-item">
-                    <a href="/orders" class="nav-link">Мои заказы</a>
-                </li>
             </ul>
             <div class="collapse navbar-collapse">
                 <ul class="navbar-nav ms-auto">
@@ -17,7 +14,7 @@
                             Профиль
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark">
-                            @if(!isset($userData))
+                            @if(!session('userData'))
                                 <li>
                                     <button class="dropdown-item" data-bs-toggle="modal" data-bs-target="#signin">
                                         Войти
@@ -29,9 +26,15 @@
                                     </button>
                                 </li>
                             @else
-                                <li class="dropdown-header">{{$userData['surname'].' '.$userData['name'].' '. $userData['lastname']}}</li>
-                                <li><a class="dropdown-item" href="#">Настройки профиля</a></li>
-                                <li><a class="dropdown-item" href="/orders">Мои заказы</a></li>
+                                <li class="dropdown-header">{{session('userData')['surname'].' '.session('userData')['name'].' '. session('userData')['lastname']}}</li>
+                                <li><a class="dropdown-item" href="/setting">Настройки профиля</a></li>
+                                @if(session('userData')['role'] == 'admin')
+                                    <li><a class="dropdown-item" href="/admin-panel">Админ-панель</a></li>
+                                @elseif(session('userData')['role'] == 'supplier')
+                                    <li><a class="dropdown-item {{$page == 'orders' ? 'active' : '' }}" href="/supplier/orders">Доступные заказы</a></li>
+                                @elseif(session('userData')['role'] == 'client')
+                                    <li><a class="dropdown-item" href="/orders">Мои заказы</a></li>
+                                @endif
                                 <li><a class="dropdown-item" href="/signout">Выйти</a></li>
                             @endif
                         </ul>

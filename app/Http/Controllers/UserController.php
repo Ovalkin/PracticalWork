@@ -14,27 +14,27 @@ class UserController extends Controller
 
         $userId = session('signedUser');
         if ($userId != null) {
-            $userData = new User;
-            $returnData['userData'] = $userData->getUserData($userId);
+            $returnData['userData'] = session('userData');
         }
 
         switch ($page) {
             case '':
-                break;
+                return view('index', $returnData);
             case 'orders':
                 $order = new Order;
-                $returnData['orders'] = $order->getForUserId($userId);
-                break;
+                $returnData['orders'] = $order->getForUserId(session('userData')['id']);
+                return view('orders', $returnData);
+            case 'setting':
+                return view('setting', $returnData);
             default:
                 return redirect()->to('/');
         }
-
-        return view('index', $returnData);
     }
 
     public function signout()
     {
         session()->flush();
+        session()->flash('alert', 'Вы успешно вышли из своего аккаунта!');
         return redirect()->to('/');
     }
 
@@ -43,14 +43,18 @@ class UserController extends Controller
         $signinData = $request->all();
 
         if (in_array(null, $signinData)) {
-            return 'Заполните все поля';
+            session()->flash('alert', 'Заполните все поля и попробуйте снова!');
+            return redirect()->to('/');
         }
 
         $user = new User;
         $userId = $user->signinCheck($signinData);
         if ($userId) {
-            session(['signedUser' => $userId]);
-        }
+            $userData = $user->getUserData($userId);
+            session(['signedUser' => true]);
+            session(['userData' => $userData]);
+        } else session()->flash('alert', 'Логин или пароль не верны!');
+        session()->flash('alert', 'Вы успешно вошли!');
         return redirect()->to('/');
     }
 
@@ -61,7 +65,10 @@ class UserController extends Controller
         unset($signupData['_token']);
 
         foreach ($signupData as $input) {
-            if ($input == null | $input == '+7') return "Заполните все поля";
+            if ($input == null | $input == '+7') {
+                session()->flash('alert', 'Заполните все поля и попробуйте снова');
+                return redirect()->to('/');
+            }
         }
 
         $user = new User();
@@ -74,14 +81,21 @@ class UserController extends Controller
             unset($signupData['rePassword']);
             if ($checkData) {
                 $user->signup($signupData);
-            } else return 'Почти или телефон уже заняты!'; //
-        } else return 'Пароли не совпадают';               // Поменять на уведмлялку
+            } else {
+                session()->flash('alert', 'Почта или телефон уже заняты');
+                return redirect()->to('/');
+            }
+        } else {
+            session()->flash('alert', 'Пароли не совпадают');
+            return redirect()->to('/');
+        }
 
         $signinData['email'] = $signupData['email'];
         $signinData['password'] = $signupData['password'];
         $signinData = Request::create('/signin', 'POST', $signinData);
         $this->signin($signinData);
 
+        session()->flash('alert', 'Вы успешно зарегестрировались!');
         return redirect()->to('/');
     }
 
@@ -90,11 +104,16 @@ class UserController extends Controller
         $orderData = $request->all();
         unset($orderData['_token']);
 
-        $orderData['user_id'] = session('signedUser');
+        $orderData['user_id'] = session('userData')['id'];
 
         $order = new Order;
         $order->addOrder($orderData);
-
+        session()->flash('alert', 'Заказ успешно оформлен');
         return redirect()->to('orders');
+    }
+
+    public function changeUserData(Request $request)
+    {
+        dd($request->all());
     }
 }
