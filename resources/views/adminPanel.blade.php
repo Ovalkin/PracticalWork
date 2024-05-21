@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
     <div class="pt-5 container" style="min-height: 900px">
         <ul class="nav nav-tabs pt-3 justify-content-center">

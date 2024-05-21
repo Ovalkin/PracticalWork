@@ -56,6 +56,9 @@ class User extends Authenticatable
             ->toArray()[0];
     }
 
+    public function changeUserData($newUserData){
+        dd($newUserData);
+    }
 
 }
 

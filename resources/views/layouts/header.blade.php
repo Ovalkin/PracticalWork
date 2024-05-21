@@ -27,7 +27,7 @@
                                 </li>
                             @else
                                 <li class="dropdown-header">{{session('userData')['surname'].' '.session('userData')['name'].' '. session('userData')['lastname']}}</li>
-                                <li><a class="dropdown-item" href="#">Настройки профиля</a></li>
+                                <li><a class="dropdown-item" href="/setting">Настройки профиля</a></li>
                                 @if(session('userData')['role'] == 'admin')
                                     <li><a class="dropdown-item" href="/admin-panel">Админ-панель</a></li>
                                 @elseif(session('userData')['role'] == 'supplier')

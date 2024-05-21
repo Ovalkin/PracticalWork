@@ -12,7 +12,7 @@ class AdminController extends Controller
         if (session('userData')['role'] != 'admin')
             return redirect()->to('/');
         $returnData['page'] = $page;
-        switch ($page){
+        switch ($page) {
             case '':
                 return view('adminPanel', $returnData);
             case 'orders':
@@ -29,12 +29,14 @@ class AdminController extends Controller
         $action = $request['action'];
         $orderId = $request['idOrder'];
 
-        if ($action == 'accept'){
-            $order = new Order;
-            $order->submitUserOrder($orderId);
-            return redirect('/admin-panel/orders');
+        $order = new Order;
+        if ($action == 'accept') {
+            $order->acceptUserOrder($orderId);
+            session()->flash('alert', 'Заказ принят. Его айди: '.$orderId);
+        } else {
+            $order->rejectUserOrder($orderId);
+            session()->flash('alert', 'Заказ отклонен. Его айди: '.$orderId);
         }
-
-        dd($request->all());
+        return redirect('/admin-panel/orders');
     }
 }

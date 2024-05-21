@@ -21,18 +21,20 @@ class SupplierController extends Controller
             default:
                 return redirect()->to('/');
         }
+        return redirect()->to('/');
     }
     public function submitUserOrder(Request $request)
     {
         $action = $request['action'];
         $orderId = $request['idOrder'];
+        $supplierId = session('userData')['id'];
 
         if ($action == 'accept'){
             $order = new Order;
-            $order->submitUserOrderSupplier($orderId);
+            $order->submitUserOrderSupplier($orderId, $supplierId);
+            session()->flash('alert', 'Заказ принят. Его айди: '.$orderId);
             return redirect('supplier/orders');
         }
-
         dd($request->all());
     }
 }

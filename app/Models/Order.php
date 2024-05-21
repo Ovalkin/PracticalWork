@@ -44,12 +44,26 @@ class Order extends Model
         else return false;
     }
 
-    public function submitUserOrder($id)
+    public function acceptUserOrder($id)
     {
-        Order::query()->where('id', $id)->update(['status'=>'Принята администратором, ожидайте принятия поставщиком']);
+        Order::query()
+            ->where('id', $id)
+            ->update(['status' => 'Принята администратором, ожидайте принятия поставщиком']);
     }
-    public function submitUserOrderSupplier($id)
+    public function rejectUserOrder($id)
     {
-        Order::query()->where('id', $id)->update(['status'=>'Принят поставщиком']);
+        Order::query()
+            ->where('id', $id)
+            ->update(['status' => 'Заказ отклонён']);
+    }
+
+    public function submitUserOrderSupplier($orderId, $supplierId)
+    {
+        Order::query()
+            ->where('id', $orderId)
+            ->update([
+                'supplier_id' => $supplierId,
+                'status' => 'Принят поставщиком'
+            ]);
     }
 }
