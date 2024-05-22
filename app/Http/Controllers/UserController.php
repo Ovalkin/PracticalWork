@@ -114,6 +114,17 @@ class UserController extends Controller
 
     public function changeUserData(Request $request)
     {
-        dd($request->all());
+        $newUserData = $request->all();
+        $userId = session('userData')['id'];
+        unset($newUserData['_token']);
+
+        $user = new User;
+
+        $user->changeUserData($newUserData, $userId);
+
+        session(['userData' => $user->getUserData($userId)]);
+        session()->flash('alert', 'Вы успешно поменяли данные!');
+
+        return redirect()->to('/setting');
     }
 }

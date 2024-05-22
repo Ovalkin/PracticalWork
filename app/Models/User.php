@@ -56,8 +56,8 @@ class User extends Authenticatable
             ->toArray()[0];
     }
 
-    public function changeUserData($newUserData){
-        dd($newUserData);
+    public function changeUserData($newUserData, $id){
+        User::query()->where('id', $id)->update($newUserData);
     }
 
 }
